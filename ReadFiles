@@ -16,9 +16,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadFiles {
-	static String fileDestination = "C:\\Users\\BHUUVNESH\\Desktop\\FileFolder";
-
+	
 	public static void main(String[] args) throws IOException {
+		 String fileDestination = "C:\\Users\\BHUUVNESH\\Desktop\\FileFolder";
+		 String ResultFile = "C:\\Users\\BHUUVNESH\\Desktop";
+		
+		
+		JOptionPane.showMessageDialog(null, "Please Confirm Source Path:  "+fileDestination);
+		JOptionPane.showMessageDialog(null, "Please Confirm Result Path:  "+ResultFile);
 
 		File files = new File(fileDestination);
 
@@ -49,11 +54,10 @@ public class ReadFiles {
 			}
 		}
 		// Write the output to a file
-		FileOutputStream fileOut = new FileOutputStream(
-				"poi-generated-file.xlsx");
+		 FileOutputStream fileOut = new FileOutputStream(ResultFile+"\\poi-generated-file.xlsx");
 		workbook.write(fileOut);
 
-		JOptionPane.showMessageDialog(null, "My Goodness, this is so concise");
+		JOptionPane.showMessageDialog(null, "Success");
 		// showMessageDialog(null, "This is even shorter");
 
 		fileOut.close();
@@ -81,5 +85,3 @@ public class ReadFiles {
 	</exclusions>
 </dependency>
 </dependencies>*/
-
-
