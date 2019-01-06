@@ -1,0 +1,62 @@
+package fromFile;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+
+public class ReadFiles {
+	static String fileDestination="C:\\Users\\BHUUVNESH\\Desktop\\FileFolder";
+
+	public static void main(String[] args) throws IOException {
+		File files=new File(fileDestination);
+		
+		Workbook workbook = new XSSFWorkbook();
+		CreationHelper createHelper = workbook.getCreationHelper();
+
+        		for (final File fileEntry : files.listFiles()) {
+	            
+        			System.out.println(fileEntry.getName());
+	            
+	            BufferedReader br = new BufferedReader(new FileReader(fileEntry)); 
+            	
+	            Sheet sheet = workbook.createSheet(fileEntry.getName().replace(".txt", ""));
+                Row headerRow = sheet.createRow(0);
+                
+	            String st; 
+	            while ((st = br.readLine()) != null) {
+
+	            String array[] =st.split(",");
+	            	for(int i = 0; i < array.length; i++) {
+	                    Cell cell = headerRow.createCell(i);
+	                    cell.setCellValue(array[i]);
+	                }
+	            	
+	            } 
+	        
+	    }
+		// Write the output to a file
+        FileOutputStream fileOut = new FileOutputStream("poi-generated-file.xlsx");
+        workbook.write(fileOut);
+      
+        JOptionPane.showMessageDialog(null, "My Goodness, this is so concise");
+        // showMessageDialog(null, "This is even shorter");
+        
+        fileOut.close();
+
+        // Closing the workbook
+        workbook.close();
+	}
+}
+
