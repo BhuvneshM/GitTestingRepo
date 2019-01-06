@@ -15,48 +15,51 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
 public class ReadFiles {
-	static String fileDestination="C:\\Users\\BHUUVNESH\\Desktop\\FileFolder";
+	static String fileDestination = "C:\\Users\\BHUUVNESH\\Desktop\\FileFolder";
 
 	public static void main(String[] args) throws IOException {
-		File files=new File(fileDestination);
-		
+
+		File files = new File(fileDestination);
+
 		Workbook workbook = new XSSFWorkbook();
 		CreationHelper createHelper = workbook.getCreationHelper();
 
-        		for (final File fileEntry : files.listFiles()) {
-	            
-        			System.out.println(fileEntry.getName());
-	            
-	            BufferedReader br = new BufferedReader(new FileReader(fileEntry)); 
-            	
-	            Sheet sheet = workbook.createSheet(fileEntry.getName().replace(".txt", ""));
-                Row headerRow = sheet.createRow(0);
-                
-	            String st; 
-	            while ((st = br.readLine()) != null) {
+		for (final File fileEntry : files.listFiles()) {
+			System.out.println(fileEntry.getName());
 
-	            String array[] =st.split(",");
-	            	for(int i = 0; i < array.length; i++) {
-	                    Cell cell = headerRow.createCell(i);
-	                    cell.setCellValue(array[i]);
-	                }
-	            	
-	            } 
-	        
-	    }
+			BufferedReader br = new BufferedReader(new FileReader(fileEntry));
+			int lines = 0;
+
+			Sheet sheet = workbook.createSheet(fileEntry.getName().replace(
+					".txt", ""));
+			
+			//System.out.println(lines);
+
+
+			String st;
+			while ((st = br.readLine()) != null) {
+				Row headerRow = sheet.createRow(lines);
+				String array[] = st.split(",");
+				for (int i = 0; i < array.length; i++) {
+					Cell cell = headerRow.createCell(i);
+					cell.setCellValue(array[i]);
+				}
+				lines++;
+			}
+		}
 		// Write the output to a file
-        FileOutputStream fileOut = new FileOutputStream("poi-generated-file.xlsx");
-        workbook.write(fileOut);
-      
-        JOptionPane.showMessageDialog(null, "My Goodness, this is so concise");
-        // showMessageDialog(null, "This is even shorter");
-        
-        fileOut.close();
+		FileOutputStream fileOut = new FileOutputStream(
+				"poi-generated-file.xlsx");
+		workbook.write(fileOut);
 
-        // Closing the workbook
-        workbook.close();
+		JOptionPane.showMessageDialog(null, "My Goodness, this is so concise");
+		// showMessageDialog(null, "This is even shorter");
+
+		fileOut.close();
+
+		// Closing the workbook
+		workbook.close();
 	}
 }
 
@@ -78,4 +81,5 @@ public class ReadFiles {
 	</exclusions>
 </dependency>
 </dependencies>*/
+
 
